@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <color name="colorPrimary">#008577</color>
+    <color name="colorPrimaryDark">#00574B</color>
+    <color name="colorAccent">#D81B60</color>
+
+
+    <color name="appBackground">#484848</color>
+    <color name="appToolbarBackground">#505050</color>
+    <color name="appToolbarBackgroundTransparent">#80505050</color>
+    <color name="white">#ffffff</color>
+    <color name="whiteTrans">#50ffffff</color>
+    <color name="whiteTranss">#10ffffff</color>
+    <color name="black">#000</color>
+
+
+    <color name="pie_red">#E61010</color>
+    <color name="pie_yellow">#E6E227</color>
+    <color name="pie_green">#80E627</color>
+</resources>
