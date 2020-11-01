@@ -13,14 +13,13 @@ import retrofit2.Response
 
 class ContientVM : ViewModel() {
 
-    private lateinit var contientData: MutableLiveData<BaseResponse<List<ContientData>>>
-    private lateinit var contientLoading: MutableLiveData<Boolean>
-    private lateinit var contientError: MutableLiveData<Boolean>
-    private lateinit var contientErrorMessage: MutableLiveData<String>
+    private val contientData: MutableLiveData<BaseResponse<List<ContientData>>> = MutableLiveData()
+    private val contientLoading: MutableLiveData<Boolean> = MutableLiveData()
+    private val contientError: MutableLiveData<Boolean> = MutableLiveData()
+    private val contientErrorMessage: MutableLiveData<String> = MutableLiveData()
 
 
-    private lateinit var contientCall: Call<BaseResponse<List<ContientData>>>
-    private lateinit var apiClient: ApiClient
+    private var contientCall: Call<BaseResponse<List<ContientData>>>? = null
 
 
     fun getContientData(): LiveData<BaseResponse<List<ContientData>>> {
@@ -42,8 +41,8 @@ class ContientVM : ViewModel() {
 
     fun fetchData(): Unit {
         contientLoading.value = true
-        contientCall = apiClient.apiService.getContientData()
-        contientCall.enqueue(object : Callback<BaseResponse<List<ContientData>>> {
+        contientCall = ApiClient.apiService.getContientData()
+        contientCall?.enqueue(object : Callback<BaseResponse<List<ContientData>>> {
             override fun onResponse(
                 call: Call<BaseResponse<List<ContientData>>>,
                 response: Response<BaseResponse<List<ContientData>>>
@@ -62,7 +61,7 @@ class ContientVM : ViewModel() {
     }
 
     override fun onCleared() {
-        contientCall.cancel()
+        contientCall?.cancel()
     }
 
 

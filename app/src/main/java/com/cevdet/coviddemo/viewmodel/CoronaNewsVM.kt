@@ -13,14 +13,13 @@ import retrofit2.Response
 
 class CoronaNewsVM : ViewModel() {
 
-    private lateinit var coronaNews: MutableLiveData<BaseResponse<List<CoronaNews>>>
-    private lateinit var coronaNewsLoading: MutableLiveData<Boolean>
-    private lateinit var coronaNewsError: MutableLiveData<Boolean>
-    private lateinit var coronaNewsErrorMessage: MutableLiveData<String>
+    private val coronaNews: MutableLiveData<BaseResponse<List<CoronaNews>>> = MutableLiveData()
+    private val coronaNewsLoading: MutableLiveData<Boolean> = MutableLiveData()
+    private val coronaNewsError: MutableLiveData<Boolean> = MutableLiveData()
+    private val coronaNewsErrorMessage: MutableLiveData<String> = MutableLiveData()
 
 
-    private lateinit var coronaNewsCall: Call<BaseResponse<List<CoronaNews>>>
-    private lateinit var apiClient: ApiClient
+    private var coronaNewsCall: Call<BaseResponse<List<CoronaNews>>>? = null
 
 
     fun getCoronaNewsData(): LiveData<BaseResponse<List<CoronaNews>>> {
@@ -42,8 +41,8 @@ class CoronaNewsVM : ViewModel() {
 
     fun fetchData(): Unit {
         coronaNewsLoading.value = true
-        coronaNewsCall = apiClient.apiService.getCoronaNewsData()
-        coronaNewsCall.enqueue(object : Callback<BaseResponse<List<CoronaNews>>> {
+        coronaNewsCall = ApiClient.apiService.getCoronaNewsData()
+        coronaNewsCall?.enqueue(object : Callback<BaseResponse<List<CoronaNews>>> {
             override fun onResponse(
                 call: Call<BaseResponse<List<CoronaNews>>>,
                 response: Response<BaseResponse<List<CoronaNews>>>
@@ -62,7 +61,7 @@ class CoronaNewsVM : ViewModel() {
     }
 
     override fun onCleared() {
-        coronaNewsCall.cancel()
+        coronaNewsCall?.cancel()
     }
 
 

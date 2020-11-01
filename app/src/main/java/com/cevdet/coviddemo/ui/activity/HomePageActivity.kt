@@ -1,6 +1,5 @@
 package com.cevdet.coviddemo.ui.activity
 
-import android.content.Context
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import com.cevdet.coviddemo.R
@@ -17,11 +16,6 @@ class HomePageActivity : BaseActivity() {
     private lateinit var chart: PieChart
     private lateinit var viewModel: TotalVM
     private var totalData: TotalData? = null
-
-
-    override fun getContext(): Context {
-        return this@HomePageActivity
-    }
 
     override fun initViews() {
         chart = findViewById(R.id.pieChart)
@@ -47,7 +41,7 @@ class HomePageActivity : BaseActivity() {
             else hideLoading()
         })
 
-        viewModel.getTotalErrorMessage().observe(this,Observer<String>{
+        viewModel.getTotalErrorMessage().observe(this, Observer<String> {
             if (it != null) showErrorDialog(viewModel.getTotalErrorMessage().value!!)
         })
     }
@@ -56,9 +50,24 @@ class HomePageActivity : BaseActivity() {
     private fun setChart() {
         val listPie = ArrayList<PieEntry>()
         val listColors = ArrayList<Int>()
-        listPie.add(PieEntry(totalData?.totalDeaths!!.replace(",","").toInt().toFloat(), "TotalDeaths"))
-        listPie.add(PieEntry(totalData?.totalCases!!.replace(",","").toInt().toFloat(), "TotalCases"))
-        listPie.add(PieEntry(totalData?.totalRecovered!!.replace(",","").toInt().toFloat(), "TotalRecovered"))
+        listPie.add(
+            PieEntry(
+                totalData?.totalDeaths!!.replace(",", "").toInt().toFloat(),
+                "TotalDeaths"
+            )
+        )
+        listPie.add(
+            PieEntry(
+                totalData?.totalCases!!.replace(",", "").toInt().toFloat(),
+                "TotalCases"
+            )
+        )
+        listPie.add(
+            PieEntry(
+                totalData?.totalRecovered!!.replace(",", "").toInt().toFloat(),
+                "TotalRecovered"
+            )
+        )
         listColors.add(getColor(R.color.pie_red))
         listColors.add(getColor(R.color.pie_yellow))
         listColors.add(getColor(R.color.pie_green))
@@ -72,8 +81,5 @@ class HomePageActivity : BaseActivity() {
         chart.description.isEnabled = false
         chart.setEntryLabelColor(R.color.white)
         chart.animate()
-
-
-
     }
 }

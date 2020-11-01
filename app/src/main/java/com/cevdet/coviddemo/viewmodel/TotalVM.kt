@@ -12,9 +12,9 @@ import retrofit2.Response
 
 class TotalVM : ViewModel() {
 
-    private var totalData: MutableLiveData<TotalData> = MutableLiveData()
-    private var totalLoading: MutableLiveData<Boolean> = MutableLiveData()
-    private var totalErrorMessage: MutableLiveData<String> = MutableLiveData()
+    private val totalData: MutableLiveData<TotalData> = MutableLiveData()
+    private val totalLoading: MutableLiveData<Boolean> = MutableLiveData()
+    private val totalErrorMessage: MutableLiveData<String> = MutableLiveData()
 
 
     private var totalCall: Call<BaseResponse<TotalData>>? = null
@@ -32,7 +32,6 @@ class TotalVM : ViewModel() {
     fun getTotalErrorMessage(): LiveData<String> {
         return totalErrorMessage
     }
-
 
 
     fun fetchData() {

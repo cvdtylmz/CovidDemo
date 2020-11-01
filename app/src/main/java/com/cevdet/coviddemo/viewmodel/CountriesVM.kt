@@ -11,14 +11,13 @@ import retrofit2.Callback
 import retrofit2.Response
 
 class CountriesVM : ViewModel() {
-    private lateinit var countriesData: MutableLiveData<BaseResponse<List<CountriesData>>>
-    private lateinit var countriesLoading: MutableLiveData<Boolean>
-    private lateinit var countriesError: MutableLiveData<Boolean>
-    private lateinit var countriesErrorMessage: MutableLiveData<String>
+    private val countriesData: MutableLiveData<BaseResponse<List<CountriesData>>> = MutableLiveData()
+    private val countriesLoading: MutableLiveData<Boolean> = MutableLiveData()
+    private val countriesError: MutableLiveData<Boolean> = MutableLiveData()
+    private val countriesErrorMessage: MutableLiveData<String> = MutableLiveData()
 
 
-    private lateinit var countriesCall: Call<BaseResponse<List<CountriesData>>>
-    private lateinit var apiClient: ApiClient
+    private var countriesCall: Call<BaseResponse<List<CountriesData>>>? = null
 
 
     fun getCountriesData(): LiveData<BaseResponse<List<CountriesData>>> {
@@ -40,8 +39,8 @@ class CountriesVM : ViewModel() {
 
     fun fetchData(): Unit {
         countriesLoading.value = true
-        countriesCall = apiClient.apiService.getCountriesData()
-        countriesCall.enqueue(object : Callback<BaseResponse<List<CountriesData>>> {
+        countriesCall = ApiClient.apiService.getCountriesData()
+        countriesCall?.enqueue(object : Callback<BaseResponse<List<CountriesData>>> {
             override fun onResponse(
                 call: Call<BaseResponse<List<CountriesData>>>,
                 response: Response<BaseResponse<List<CountriesData>>>
@@ -60,7 +59,7 @@ class CountriesVM : ViewModel() {
     }
 
     override fun onCleared() {
-        countriesCall.cancel()
+        countriesCall?.cancel()
     }
 
 
